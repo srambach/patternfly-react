@@ -179,6 +179,7 @@ export const JumpLinks: React.FunctionComponent<JumpLinksProps> = ({
             const scrollItem = scrollItems[itemIndex];
             return cloneElement(child as React.ReactElement<JumpLinksItemProps>, {
               onClick(ev: React.MouseEvent) {
+                ev.preventDefault();
                 isLinkClicked.current = true;
                 // Items might have rendered after this component. Do a quick refresh.
                 let newScrollItems;
@@ -206,7 +207,11 @@ export const JumpLinks: React.FunctionComponent<JumpLinksProps> = ({
                         offset += stickyParent.scrollHeight;
                       }
                     }
-                    scrollableElement.scrollTo(0, newScrollItem.offsetTop - offset);
+
+                    scrollableElement.scrollTo({
+                      top: newScrollItem.offsetTop - offset,
+                      behavior: 'smooth'
+                    });
                   }
                   newScrollItem.focus();
                   if (shouldReplaceNavHistory) {
@@ -214,7 +219,6 @@ export const JumpLinks: React.FunctionComponent<JumpLinksProps> = ({
                   } else {
                     window.history.pushState('', '', (ev.currentTarget as HTMLAnchorElement).href);
                   }
-                  ev.preventDefault();
                   setActiveIndex(itemIndex);
                 }
                 if (onClickProp) {

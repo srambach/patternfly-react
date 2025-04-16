@@ -98,7 +98,7 @@ ScrollspyH2 = () => {
                 isVertical={isVertical}
                 isCentered={!isVertical}
                 label="Jump to section"
-                scrollableSelector=".pf-v6-c-page__main-container"
+                scrollableSelector="#scrollable-element"
                 offset={offsetHeight}
                 expandable={{ default: isVertical ? 'expandable' : 'nonExpandable', md: 'nonExpandable' }}
                 isExpanded
